@@ -6,12 +6,36 @@ import type { TalentProfile } from "@/domain/talent/types";
 import { ButtonLink } from "@/components/ButtonLink";
 import { SectionHeading } from "@/components/SectionHeading";
 import { TechieCharacter } from "@/components/TechieCharacter";
-import { ArrowRightIcon, ArrowUpRightIcon, CheckIcon, CodeIcon, ProofIcon, TrophyIcon, UsersIcon } from "@/components/Icons";
+import {
+  ArrowRightIcon,
+  ArrowUpRightIcon,
+  CheckIcon,
+  CodeIcon,
+  ProofIcon,
+  SearchIcon,
+  SlidersHorizontalIcon,
+  TrophyIcon,
+  UsersIcon,
+} from "@/components/Icons";
 import { siteConfig } from "@/lib/site";
 import { HeroVisual } from "./HeroVisual";
 
 export function LandingPage({ dictionary, featuredTalent, locale }: { dictionary: Dictionary; featuredTalent: TalentProfile; locale: Locale }) {
   const featuredProject = featuredTalent.projects.find((project) => project.featured) ?? featuredTalent.projects[0];
+  const profileHref = localizedPath(locale, `/talent/${featuredTalent.slug}`);
+  const browserFilters = [featuredTalent.specialties[0], featuredTalent.specialties[1], featuredProject.technologies[0]].filter((item): item is string => Boolean(item)).slice(0, 3);
+  const candidateInitials = featuredTalent.name
+    .split(" ")
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+
+  const availabilityLabel = featuredTalent.availability === "open"
+    ? dictionary.companies.discovery.availableNow
+    : featuredTalent.availability === "unavailable"
+      ? dictionary.companies.discovery.unavailableNow
+      : dictionary.companies.discovery.selectiveAvailability;
 
   return (
     <main>
@@ -92,14 +116,117 @@ export function LandingPage({ dictionary, featuredTalent, locale }: { dictionary
 
       <section className="companies section-dark" id="companies">
         <div className="container section-pad dual-grid dual-grid--reverse">
-          <div className="talent-browser-mock">
-            <div className="browser-bar"><span/><span/><span/><small>talent.techtojob</small></div>
-            <div className="browser-filters"><span>Full-Stack</span><span>Backend</span><span>Next.js</span></div>
-            <div className="browser-profile">
-              <div className="browser-avatar">SI</div><div><strong>{featuredTalent.name}</strong><small>{featuredTalent.role}</small></div><span className="match-pill">{dictionary.common.realWork}</span>
+          <div className="talent-discovery-mock" tabIndex={0} aria-label={dictionary.companies.discovery.mockLabel}>
+            <div className="talent-discovery__frame">
+              <div className="talent-discovery__bar">
+                <div className="talent-discovery__dots" aria-hidden="true"><span /><span /><span /></div>
+                <small>talent.techtojob</small>
+                <span className="talent-discovery__results-pill">{dictionary.companies.discovery.resultsCount}</span>
+              </div>
+
+              <div className="talent-discovery__toolbar">
+                <div className="discovery-search" aria-label={dictionary.companies.discovery.searchLabel}>
+                  <SearchIcon />
+                  <span>{dictionary.companies.discovery.searchPlaceholder}</span>
+                  <kbd>/</kbd>
+                </div>
+                <div className="discovery-toolbar-action">
+                  <SlidersHorizontalIcon />
+                  <span>{dictionary.companies.discovery.filterAction}</span>
+                </div>
+              </div>
+
+              <div className="discovery-filter-group">
+                <span className="discovery-filter-group__label">{dictionary.companies.discovery.filtersLabel}</span>
+                <div className="discovery-filter-chips">
+                  {browserFilters.map((item) => <span className="discovery-filter-chip" key={item}>{item}</span>)}
+                </div>
+              </div>
+
+              <div className="discovery-layout">
+                <div className="discovery-panel">
+                  <div className="discovery-section-heading">
+                    <span>{dictionary.companies.discovery.resultsLabel}</span>
+                    <strong>{dictionary.companies.discovery.highlightLabel}</strong>
+                  </div>
+
+                  <article className="discovery-result-card">
+                    <div className="discovery-result-card__top">
+                      <div className="discovery-result-card__avatar">{candidateInitials}</div>
+                      <div>
+                        <strong>{featuredTalent.name}</strong>
+                        <small>{featuredTalent.role}</small>
+                      </div>
+                      <span className="discovery-status-pill"><span />{availabilityLabel}</span>
+                    </div>
+
+                    <div className="discovery-result-card__signals">
+                      <span>{dictionary.common.realWork}</span>
+                      <span>{featuredTalent.projects.length} {dictionary.companies.discovery.projectsLabel}</span>
+                      <span>{featuredTalent.technologies.length} {dictionary.companies.discovery.technologiesLabel}</span>
+                    </div>
+
+                    <div className="discovery-meter-block">
+                      <div className="discovery-meter-block__label">
+                        <span>{dictionary.companies.discovery.evidenceLabel}</span>
+                        <strong>{dictionary.companies.discovery.evidenceValue}</strong>
+                      </div>
+                      <div className="discovery-meter" aria-hidden="true"><span /></div>
+                    </div>
+                  </article>
+
+                  <div className="discovery-mini-cards">
+                    <article className="discovery-mini-card discovery-mini-card--accent">
+                      <small>{dictionary.companies.discovery.featuredProjectLabel}</small>
+                      <strong>{featuredProject.name}</strong>
+                      <p>{featuredProject.tagline}</p>
+                    </article>
+                    <article className="discovery-mini-card">
+                      <small>{dictionary.companies.discovery.evidenceFooterLabel}</small>
+                      <strong>{featuredTalent.links.length} {dictionary.companies.discovery.linksLabel}</strong>
+                      <p>{dictionary.companies.discovery.evidenceFooterText}</p>
+                    </article>
+                  </div>
+                </div>
+
+                <div className="discovery-panel discovery-panel--evidence">
+                  <div className="discovery-section-heading">
+                    <span>{dictionary.companies.discovery.evidencePanelLabel}</span>
+                    <strong>{dictionary.companies.discovery.evidencePanelValue}</strong>
+                  </div>
+
+                  <div className="discovery-evidence-list">
+                    <article className="discovery-evidence-card discovery-evidence-card--project">
+                      <small>{dictionary.companies.discovery.featuredProjectLabel}</small>
+                      <strong>{featuredProject.name}</strong>
+                      <p>{featuredProject.tagline}</p>
+                      <div className="discovery-evidence-tags">
+                        {featuredProject.technologies.slice(0, 3).map((technology) => <span key={technology}>{technology}</span>)}
+                      </div>
+                    </article>
+
+                    <article className="discovery-evidence-card">
+                      <small>{dictionary.companies.discovery.specialtiesLabel}</small>
+                      <strong>{featuredTalent.specialties.slice(0, 2).join(" · ")}</strong>
+                      <p>{dictionary.companies.discovery.specialtiesText}</p>
+                    </article>
+
+                    <article className="discovery-evidence-card">
+                      <small>{dictionary.companies.discovery.linksLabel}</small>
+                      <strong>{featuredTalent.links.map((link) => link.label).join(" · ")}</strong>
+                      <p>{dictionary.companies.discovery.linksText}</p>
+                    </article>
+                  </div>
+
+                  <Link className="discovery-evidence__link" href={profileHref}>
+                    {dictionary.common.viewProfile}
+                    <ArrowRightIcon />
+                  </Link>
+                </div>
+              </div>
             </div>
-            <div className="browser-project"><small>{dictionary.common.publishedProject}</small><strong>{featuredProject.name}</strong><span>{featuredProject.technologies.slice(0,3).join(" · ")}</span></div>
           </div>
+
           <div>
             <SectionHeading eyebrow={dictionary.companies.eyebrow} title={dictionary.companies.title} description={dictionary.companies.description} inverse />
             <ul className="feature-list feature-list--inverse">{dictionary.companies.bullets.map((item) => <li key={item}><CheckIcon />{item}</li>)}</ul>
@@ -152,7 +279,7 @@ export function LandingPage({ dictionary, featuredTalent, locale }: { dictionary
               <span><strong>{featuredTalent.technologies.length}</strong>{dictionary.profileShowcase.technologiesSignal}</span>
               <span><strong>{featuredTalent.specialties.length}</strong>{dictionary.profileShowcase.specialtiesSignal}</span>
             </div>
-            <Link className="text-link" href={localizedPath(locale, `/talent/${featuredTalent.slug}`)}>{dictionary.profileShowcase.viewProfile}<ArrowRightIcon /></Link>
+            <Link className="text-link" href={profileHref}>{dictionary.profileShowcase.viewProfile}<ArrowRightIcon /></Link>
           </div>
 
           <div className="evidence-panel">
