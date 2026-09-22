@@ -108,11 +108,37 @@ export function LandingPage({ dictionary, featuredTalent, locale }: { dictionary
         </div>
       </section>
 
-      <section className="section-light" id="specialties">
+      <section className="section-light specialties-section" id="specialties">
         <div className="container section-pad">
           <SectionHeading eyebrow={dictionary.specialties.eyebrow} title={dictionary.specialties.title} description={dictionary.specialties.description} align="center" />
           <div className="specialty-grid">
-            {dictionary.specialties.items.map((item) => <article className="specialty-card" key={item.title}><span>{item.code}</span><h3>{item.title}</h3><p>{item.text}</p></article>)}
+            {dictionary.specialties.items.map((item, index) => (
+              <article className={`specialty-card specialty-card--${index + 1}`} key={item.title} tabIndex={0}>
+                <div className="specialty-card__top">
+                  <span className="specialty-card__index">{String(index + 1).padStart(2, "0")}</span>
+                  <span className="specialty-card__code">{item.code}</span>
+                </div>
+
+                <div className="specialty-card__visual" aria-hidden="true">
+                  <span className="specialty-orbit specialty-orbit--outer" />
+                  <span className="specialty-orbit specialty-orbit--inner" />
+                  <span className="specialty-core">{item.code}</span>
+                  <span className="specialty-particle specialty-particle--one" />
+                  <span className="specialty-particle specialty-particle--two" />
+                  <span className="specialty-particle specialty-particle--three" />
+                </div>
+
+                <div className="specialty-card__body">
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                </div>
+
+                <div className="specialty-card__footer" aria-hidden="true">
+                  <span className="specialty-card__line" />
+                  <ArrowRightIcon />
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
