@@ -6,7 +6,7 @@ import type { TalentProfile } from "@/domain/talent/types";
 import { ButtonLink } from "@/components/ButtonLink";
 import { SectionHeading } from "@/components/SectionHeading";
 import { TechieCharacter } from "@/components/TechieCharacter";
-import { ArrowRightIcon, ArrowUpRightIcon, CheckIcon, CodeIcon, UsersIcon } from "@/components/Icons";
+import { ArrowRightIcon, ArrowUpRightIcon, CheckIcon, CodeIcon, ProofIcon, TrophyIcon, UsersIcon } from "@/components/Icons";
 import { siteConfig } from "@/lib/site";
 import { HeroVisual } from "./HeroVisual";
 
@@ -50,14 +50,26 @@ export function LandingPage({ dictionary, featuredTalent, locale }: { dictionary
       <section className="section-light" id="how-it-works">
         <div className="container section-pad">
           <SectionHeading eyebrow={dictionary.howItWorks.eyebrow} title={dictionary.howItWorks.title} description={dictionary.howItWorks.description} />
-          <div className="steps-grid">
-            {dictionary.howItWorks.steps.map((step, index) => (
-              <article className="step-card" key={step.number}>
-                <span className="step-number">{step.number}</span>
-                <div className="step-icon">{index === 0 ? <CodeIcon /> : index === 3 ? <UsersIcon /> : <span>{index + 1}</span>}</div>
-                <h3>{step.title}</h3><p>{step.text}</p>
-              </article>
-            ))}
+          <div className="steps-journey">
+            <div className="steps-track" aria-hidden="true" />
+            <div className="steps-grid">
+              {dictionary.howItWorks.steps.map((step, index) => {
+                const icons = [<CodeIcon key="build" />, <TrophyIcon key="challenge" />, <ProofIcon key="proof" />, <UsersIcon key="connect" />];
+
+                return (
+                  <article className="step-item" key={step.number}>
+                    <div className="step-marker" aria-hidden="true">
+                      <span className="step-number">{step.number}</span>
+                      <span className="step-icon">{icons[index]}</span>
+                    </div>
+                    <div className="step-card">
+                      <h3>{step.title}</h3>
+                      <p>{step.text}</p>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
