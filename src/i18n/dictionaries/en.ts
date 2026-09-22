@@ -15,7 +15,7 @@ export const en = {
     project: "Project",
     live: "LIVE",
     comingSoonTitle: "More talent, coming soon.",
-    comingSoonDescription: "The structure is ready to grow profile by profile without changing the interface.",
+    comingSoonDescription: "The community is growing.",
     visibleWorkTitle: "Work you can actually see.",
     notFoundTitle: "This profile does not exist yet.",
     notFoundDescription: "Go back to the directory and explore the available talent.",
