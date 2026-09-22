@@ -94,3 +94,22 @@ html,body{max-width:100%;overflow-x:hidden}body{min-width:0}main,main>section{mi
   .evidence-panel__footer{font-size:.68rem}
   .community-cluster .techie--compact{transform:scale(.47);margin:-58px}
 }
+
+/* Performance hardening — keep the initial render focused on above-the-fold content. */
+.landing-page>section:not(.hero){content-visibility:auto;contain-intrinsic-size:auto 900px}
+.mobile-nav{display:none}
+.mobile-nav>summary{list-style:none}
+.mobile-nav>summary::-webkit-details-marker{display:none}
+
+@media(max-width:980px){
+  .mobile-nav{display:block;margin-left:auto}
+  .mobile-nav[open] .menu-button span:first-child{transform:translateY(3.5px) rotate(45deg)}
+  .mobile-nav[open] .menu-button span:last-child{transform:translateY(-3.5px) rotate(-45deg)}
+  .mobile-nav[open] .mobile-menu{max-height:500px;border-top:1px solid #edf0ef}
+  .mobile-menu{position:absolute;left:0;right:0;top:100%;box-shadow:0 20px 40px rgba(47,52,54,.08)}
+}
+
+@media(max-width:680px){
+  .site-header{background:rgba(255,255,255,.98);backdrop-filter:none}
+  .hero-profile-card{backdrop-filter:none}
+}

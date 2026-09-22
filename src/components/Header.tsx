@@ -1,19 +1,20 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
 import type { Dictionary } from "@/i18n/getDictionary";
 import { localeLabels, supportedLocales, type Locale } from "@/i18n/config";
 import { localizedPath, switchLocalePath } from "@/i18n/routing";
 import { siteConfig } from "@/lib/site";
 import { ArrowUpRightIcon } from "./Icons";
 
-export function Header({ dictionary, locale }: { dictionary: Dictionary; locale: Locale }) {
-  const [open, setOpen] = useState(false);
-  const pathname = usePathname();
-
+export function Header({
+  dictionary,
+  locale,
+  currentPath,
+}: {
+  dictionary: Dictionary;
+  locale: Locale;
+  currentPath: string;
+}) {
   const links = [
     { label: dictionary.navigation.howItWorks, href: localizedPath(locale, "#how-it-works") },
     { label: dictionary.navigation.talent, href: localizedPath(locale, "#talent") },
@@ -26,7 +27,7 @@ export function Header({ dictionary, locale }: { dictionary: Dictionary; locale:
     <div className="locale-switcher" role="group" aria-label={dictionary.language.label}>
       {supportedLocales.map((item) => (
         <Link
-          href={switchLocalePath(pathname, item)}
+          href={switchLocalePath(currentPath, item)}
           key={item}
           lang={item}
           hrefLang={item}
@@ -59,29 +60,24 @@ export function Header({ dictionary, locale }: { dictionary: Dictionary; locale:
           <ArrowUpRightIcon />
         </a>
 
-        <button
-          className={`menu-button ${open ? "is-open" : ""}`}
-          type="button"
-          aria-label={open ? dictionary.accessibility.closeMenu : dictionary.accessibility.openMenu}
-          aria-expanded={open}
-          onClick={() => setOpen((value) => !value)}
-        >
-          <span />
-          <span />
-        </button>
-      </div>
-
-      <div className={`mobile-menu ${open ? "is-open" : ""}`}>
-        <div className="container mobile-menu__inner">
-          {links.map((link) => (
-            <Link href={link.href} key={link.href} onClick={() => setOpen(false)}>{link.label}</Link>
-          ))}
-          <div className="locale-switcher-wrap locale-switcher-wrap--mobile">{languageSwitcher}</div>
-          <a className="button button--primary" href={siteConfig.discordUrl} target="_blank" rel="noreferrer" onClick={() => setOpen(false)}>
-            {dictionary.navigation.join}
-            <ArrowUpRightIcon />
-          </a>
-        </div>
+        <details className="mobile-nav">
+          <summary className="menu-button" aria-label={dictionary.accessibility.openMenu}>
+            <span />
+            <span />
+          </summary>
+          <div className="mobile-menu">
+            <nav className="container mobile-menu__inner" aria-label={dictionary.accessibility.mainNavigation}>
+              {links.map((link) => (
+                <Link href={link.href} key={link.href}>{link.label}</Link>
+              ))}
+              <div className="locale-switcher-wrap locale-switcher-wrap--mobile">{languageSwitcher}</div>
+              <a className="button button--primary" href={siteConfig.discordUrl} target="_blank" rel="noreferrer">
+                {dictionary.navigation.join}
+                <ArrowUpRightIcon />
+              </a>
+            </nav>
+          </div>
+        </details>
       </div>
     </header>
   );

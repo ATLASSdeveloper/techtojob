@@ -13,6 +13,7 @@ export function middleware(request: NextRequest) {
 
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("x-techtojob-locale", firstSegment);
+  requestHeaders.set("x-techtojob-pathname", pathname);
 
   return NextResponse.next({
     request: {

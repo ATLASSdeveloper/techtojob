@@ -1,3 +1,4 @@
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
@@ -23,10 +24,12 @@ export default async function LocaleLayout({
 
   const locale: Locale = localeParam;
   const dictionary = await getDictionary(locale);
+  const requestHeaders = await headers();
+  const currentPath = requestHeaders.get("x-techtojob-pathname") ?? `/${locale}`;
 
   return (
     <>
-      <Header dictionary={dictionary} locale={locale} />
+      <Header dictionary={dictionary} locale={locale} currentPath={currentPath} />
       {children}
       <Footer dictionary={dictionary} locale={locale} />
     </>

@@ -14,7 +14,7 @@ export function LandingPage({ dictionary, featuredTalent, locale }: { dictionary
   const featuredProject = featuredTalent.projects.find((project) => project.featured) ?? featuredTalent.projects[0];
 
   return (
-    <main>
+    <main className="landing-page">
       <section className="hero section-shell">
         <div className="container hero-grid">
           <div className="hero-copy">
