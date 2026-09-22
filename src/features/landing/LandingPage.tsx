@@ -92,7 +92,7 @@ export function LandingPage({ dictionary, featuredTalent, locale }: { dictionary
 
       <section className="companies section-dark" id="companies">
         <div className="container section-pad dual-grid dual-grid--reverse">
-          <div className="hiring-shift" tabIndex={0} aria-label={dictionary.companies.comparison.ariaLabel}>
+          <div className="hiring-shift" role="group" tabIndex={0} aria-label={dictionary.companies.comparison.ariaLabel}>
             <div className="hiring-shift__glow" aria-hidden="true" />
             <div className="hiring-shift__header">
               <span>{dictionary.companies.comparison.kicker}</span>
@@ -191,7 +191,7 @@ export function LandingPage({ dictionary, featuredTalent, locale }: { dictionary
         <div className="container section-pad showcase-grid">
           <div className="showcase-copy">
             <SectionHeading eyebrow={dictionary.profileShowcase.eyebrow} title={dictionary.profileShowcase.title} description={dictionary.profileShowcase.description} />
-            <div className="showcase-signals" aria-label={dictionary.profileShowcase.signalsLabel}>
+            <div className="showcase-signals" role="group" aria-label={dictionary.profileShowcase.signalsLabel}>
               <span><strong>{featuredTalent.projects.length}</strong>{dictionary.profileShowcase.projectsSignal}</span>
               <span><strong>{featuredTalent.technologies.length}</strong>{dictionary.profileShowcase.technologiesSignal}</span>
               <span><strong>{featuredTalent.specialties.length}</strong>{dictionary.profileShowcase.specialtiesSignal}</span>

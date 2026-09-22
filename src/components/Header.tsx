@@ -23,7 +23,7 @@ export function Header({ dictionary, locale }: { dictionary: Dictionary; locale:
   ];
 
   const languageSwitcher = (
-    <div className="locale-switcher" aria-label={dictionary.language.label}>
+    <div className="locale-switcher" role="group" aria-label={dictionary.language.label}>
       {supportedLocales.map((item) => (
         <Link
           href={switchLocalePath(pathname, item)}

@@ -35,7 +35,12 @@ export function TalentCard({
             className="talent-card__avatar"
           />
           {profile.verified ? (
-            <span className="talent-card__verified" title={dictionary.accessibility.verifiedProfile}>
+            <span
+              className="talent-card__verified"
+              role="img"
+              aria-label={dictionary.accessibility.verifiedProfile}
+              title={dictionary.accessibility.verifiedProfile}
+            >
               <CheckIcon />
             </span>
           ) : null}

@@ -16,7 +16,7 @@ export function HeroVisual({ profile, dictionary, locale }: { profile: TalentPro
   const githubUrl = project.repositoryUrl ?? githubLink?.href;
 
   return (
-    <div className="hero-visual" aria-label={interpolate(dictionary.accessibility.featuredTalent, { name: profile.name })}>
+    <div className="hero-visual" role="group" aria-label={interpolate(dictionary.accessibility.featuredTalent, { name: profile.name })}>
       <div className="hero-orbit hero-orbit--one" aria-hidden="true" />
       <div className="hero-orbit hero-orbit--two" aria-hidden="true" />
       <div className="hero-orbit-accent hero-orbit-accent--one" aria-hidden="true" />
@@ -34,7 +34,7 @@ export function HeroVisual({ profile, dictionary, locale }: { profile: TalentPro
               priority
             />
             {profile.verified ? (
-              <span className="verified-badge" aria-label={dictionary.accessibility.verifiedProfile}>
+              <span className="verified-badge" role="img" aria-label={dictionary.accessibility.verifiedProfile}>
                 <CheckIcon />
               </span>
             ) : null}
@@ -58,7 +58,7 @@ export function HeroVisual({ profile, dictionary, locale }: { profile: TalentPro
           <p>{project.tagline}</p>
         </div>
 
-        <div className="hero-tags" aria-label={dictionary.accessibility.projectTechnologies}>
+        <div className="hero-tags" role="group" aria-label={dictionary.accessibility.projectTechnologies}>
           {project.technologies.slice(0, 4).map((technology) => <span key={technology}>{technology}</span>)}
         </div>
 
