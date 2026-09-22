@@ -107,10 +107,19 @@ export const en = {
   profileShowcase: {
     eyebrow: "Real talent",
     title: "A profile should show what you have done, not only where you have been.",
-    description: "We are starting with a real profile and a simple idea: if you can build it, people should be able to see it.",
+    description: "Every project leaves a concrete signal. Instead of repeating a profile card, we show the evidence that builds up through real work.",
     viewProfile: "View full profile",
-    liveProject: "Published project",
-    verifiedWork: "Verifiable work"
+    verifiedWork: "Verifiable work",
+    signalsLabel: "Profile signals",
+    projectsSignal: "projects",
+    technologiesSignal: "technologies",
+    specialtiesSignal: "specialties",
+    activityEyebrow: "Verifiable activity",
+    activityTitle: "Evidence that builds with every project.",
+    featuredEvidence: "Published project",
+    projectEvidence: "Documented project",
+    liveEvidence: "Live",
+    evidenceFooter: "Projects · technologies · outcomes"
   },
   community: {
     eyebrow: "Community",

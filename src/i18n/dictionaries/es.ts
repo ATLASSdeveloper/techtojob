@@ -107,10 +107,19 @@ export const es = {
   profileShowcase: {
     eyebrow: "Talento real",
     title: "El perfil debería contar lo que has hecho, no solo dónde has estado.",
-    description: "Empezamos con un perfil real y una idea simple: si puedes construirlo, debería poder verse.",
+    description: "Cada proyecto deja una señal concreta. En lugar de repetir una ficha de perfil, mostramos la evidencia que se acumula con el trabajo real.",
     viewProfile: "Ver perfil completo",
-    liveProject: "Proyecto publicado",
-    verifiedWork: "Trabajo verificable"
+    verifiedWork: "Trabajo verificable",
+    signalsLabel: "Señales del perfil",
+    projectsSignal: "proyectos",
+    technologiesSignal: "tecnologías",
+    specialtiesSignal: "especialidades",
+    activityEyebrow: "Actividad verificable",
+    activityTitle: "Evidencia que se acumula con cada proyecto.",
+    featuredEvidence: "Proyecto publicado",
+    projectEvidence: "Proyecto documentado",
+    liveEvidence: "En producción",
+    evidenceFooter: "Proyectos · tecnologías · resultados"
   },
   community: {
     eyebrow: "Comunidad",

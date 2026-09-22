@@ -119,16 +119,58 @@ export function LandingPage({ dictionary, featuredTalent, locale }: { dictionary
 
       <section className="showcase-section">
         <div className="container section-pad showcase-grid">
-          <div>
+          <div className="showcase-copy">
             <SectionHeading eyebrow={dictionary.profileShowcase.eyebrow} title={dictionary.profileShowcase.title} description={dictionary.profileShowcase.description} />
-            <div className="proof-row"><span><CheckIcon />{dictionary.profileShowcase.verifiedWork}</span><span className="live-pill"><span/> {dictionary.profileShowcase.liveProject}</span></div>
+            <div className="showcase-signals" aria-label={dictionary.profileShowcase.signalsLabel}>
+              <span><strong>{featuredTalent.projects.length}</strong>{dictionary.profileShowcase.projectsSignal}</span>
+              <span><strong>{featuredTalent.technologies.length}</strong>{dictionary.profileShowcase.technologiesSignal}</span>
+              <span><strong>{featuredTalent.specialties.length}</strong>{dictionary.profileShowcase.specialtiesSignal}</span>
+            </div>
             <Link className="text-link" href={localizedPath(locale, `/talent/${featuredTalent.slug}`)}>{dictionary.profileShowcase.viewProfile}<ArrowRightIcon /></Link>
           </div>
-          <div className="profile-proof-card">
-            <div className="profile-proof-card__header"><strong>{featuredTalent.name}</strong><small>{featuredTalent.role}</small></div>
-            <div className="profile-proof-card__meter"><span>{dictionary.talentProfile.projects}</span><strong>{featuredTalent.projects.length}</strong></div>
-            <div className="profile-proof-card__project"><small>{dictionary.common.featuredProject.toUpperCase()}</small><strong>{featuredProject.name}</strong><p>{featuredProject.tagline}</p></div>
-            <div className="chip-list">{featuredTalent.technologies.slice(0,5).map((item) => <span key={item}>{item}</span>)}</div>
+
+          <div className="evidence-panel">
+            <div className="evidence-panel__header">
+              <div>
+                <span className="evidence-panel__eyebrow"><span />{dictionary.profileShowcase.activityEyebrow}</span>
+                <h3>{dictionary.profileShowcase.activityTitle}</h3>
+              </div>
+              <span className="evidence-panel__count">{featuredTalent.projects.length.toString().padStart(2, "0")}</span>
+            </div>
+
+            <div className="evidence-timeline">
+              {featuredTalent.projects.map((project, index) => {
+                const isFeatured = project.id === featuredProject.id;
+                const evidenceLabel = isFeatured
+                  ? dictionary.profileShowcase.featuredEvidence
+                  : dictionary.profileShowcase.projectEvidence;
+
+                return (
+                  <article className="evidence-item" key={project.id}>
+                    <div className="evidence-item__rail" aria-hidden="true">
+                      <span className="evidence-item__node"><ProofIcon /></span>
+                    </div>
+                    <div className="evidence-item__content">
+                      <div className="evidence-item__meta">
+                        <span>{evidenceLabel}</span>
+                        <small>{String(index + 1).padStart(2, "0")}</small>
+                      </div>
+                      <h4>{project.name}</h4>
+                      <p>{project.tagline}</p>
+                      <div className="evidence-item__footer">
+                        <div className="evidence-techs">{project.technologies.slice(0, 3).map((technology) => <span key={technology}>{technology}</span>)}</div>
+                        {project.liveUrl ? <span className="evidence-live"><span />{dictionary.profileShowcase.liveEvidence}</span> : null}
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+
+            <div className="evidence-panel__footer">
+              <span><CheckIcon />{dictionary.profileShowcase.verifiedWork}</span>
+              <span>{dictionary.profileShowcase.evidenceFooter}</span>
+            </div>
           </div>
         </div>
       </section>
