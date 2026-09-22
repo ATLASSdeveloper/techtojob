@@ -13,6 +13,7 @@ export const es = {
     signal: "Señal",
     viewProfile: "Ver perfil",
     project: "Proyecto",
+    live: "LIVE",
     comingSoonTitle: "Más talento, pronto.",
     comingSoonDescription: "La estructura está preparada para crecer perfil por perfil sin cambiar la interfaz.",
     visibleWorkTitle: "Trabajo que se puede ver.",
@@ -28,6 +29,25 @@ export const es = {
     exploreTalent: "Explorar talento",
     join: "Unirme"
   },
+  language: {
+    label: "Idioma",
+    spanish: "Español",
+    english: "Inglés"
+  },
+  accessibility: {
+    home: "TechToJob, inicio",
+    mainNavigation: "Navegación principal",
+    openMenu: "Abrir menú",
+    closeMenu: "Cerrar menú",
+    featuredTalent: "Perfil destacado de {name}",
+    talentPhoto: "Foto de {name}",
+    verifiedProfile: "Perfil verificado",
+    projectTechnologies: "Tecnologías del proyecto"
+  },
+  visuals: {
+    deployed: "✓ desplegado",
+    project: "+ proyecto"
+  },
   hero: {
     eyebrow: "Comunidad tech · talento demostrado",
     titleStart: "Tu trabajo habla",
@@ -42,21 +62,9 @@ export const es = {
     title: "Contratar talento tech no debería funcionar así.",
     lead: "El candidato manda cientos de CVs. La empresa recibe cientos de CVs. Y en medio, demasiadas señales débiles para saber quién puede construir de verdad.",
     cards: [
-      {
-        stat: "200",
-        label: "CVs enviados",
-        text: "sin una oportunidad clara para demostrar capacidad práctica."
-      },
-      {
-        stat: "500",
-        label: "CVs recibidos",
-        text: "con muy poca evidencia directa de cómo trabaja cada persona."
-      },
-      {
-        stat: "3+",
-        label: "años para un junior",
-        text: "un filtro que deja talento fuera antes de poder demostrar lo que sabe."
-      }
+      { stat: "200", label: "CVs enviados", text: "sin una oportunidad clara para demostrar capacidad práctica." },
+      { stat: "500", label: "CVs recibidos", text: "con muy poca evidencia directa de cómo trabaja cada persona." },
+      { stat: "3+", label: "años para un junior", text: "un filtro que deja talento fuera antes de poder demostrar lo que sabe." }
     ],
     closing: "Menos promesas en un PDF. Más evidencia de lo que puedes construir."
   },
@@ -65,26 +73,10 @@ export const es = {
     title: "Hazlo. Demuéstralo. Haz que se note.",
     description: "Tu actividad real dentro de la comunidad se convierte en señales que otras personas y empresas pueden entender.",
     steps: [
-      {
-        number: "01",
-        title: "Construye",
-        text: "Participa en proyectos colaborativos y crea soluciones con otros profesionales de tecnología."
-      },
-      {
-        number: "02",
-        title: "Compite",
-        text: "Pon a prueba tus habilidades en torneos y retos organizados por especialidad."
-      },
-      {
-        number: "03",
-        title: "Demuestra",
-        text: "Proyectos, repositorios, resultados y participación forman un historial público de lo que has hecho."
-      },
-      {
-        number: "04",
-        title: "Conecta",
-        text: "Las empresas descubren talento a partir de trabajo real y conectan con los perfiles que necesitan."
-      }
+      { number: "01", title: "Construye", text: "Participa en proyectos colaborativos y crea soluciones con otros profesionales de tecnología." },
+      { number: "02", title: "Compite", text: "Pon a prueba tus habilidades en torneos y retos organizados por especialidad." },
+      { number: "03", title: "Demuestra", text: "Proyectos, repositorios, resultados y participación forman un historial público de lo que has hecho." },
+      { number: "04", title: "Conecta", text: "Las empresas descubren talento a partir de trabajo real y conectan con los perfiles que necesitan." }
     ]
   },
   talent: {

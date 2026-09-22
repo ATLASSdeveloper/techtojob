@@ -2,17 +2,43 @@ import Image from "next/image";
 import Link from "next/link";
 import type { TalentProfile } from "@/domain/talent/types";
 import type { Dictionary } from "@/i18n/getDictionary";
+import type { Locale } from "@/i18n/config";
+import { localizedPath } from "@/i18n/routing";
 import { ArrowRightIcon, CheckIcon } from "@/components/Icons";
 
-export function TalentCard({ profile, dictionary, compact = false }: { profile: TalentProfile; dictionary: Dictionary; compact?: boolean }) {
+function interpolate(template: string, values: Record<string, string>) {
+  return Object.entries(values).reduce((result, [key, value]) => result.replace(`{${key}}`, value), template);
+}
+
+export function TalentCard({
+  profile,
+  dictionary,
+  locale,
+  compact = false,
+}: {
+  profile: TalentProfile;
+  dictionary: Dictionary;
+  locale: Locale;
+  compact?: boolean;
+}) {
   const featuredProject = profile.projects.find((project) => project.featured) ?? profile.projects[0];
 
   return (
     <article className={`talent-card ${compact ? "talent-card--compact" : ""}`}>
       <div className="talent-card__top">
         <div className="talent-card__avatar-wrap">
-          <Image src={profile.avatar} alt={`Foto de ${profile.name}`} width={116} height={116} className="talent-card__avatar" />
-          {profile.verified ? <span className="talent-card__verified" title="Perfil verificado"><CheckIcon /></span> : null}
+          <Image
+            src={profile.avatar}
+            alt={interpolate(dictionary.accessibility.talentPhoto, { name: profile.name })}
+            width={116}
+            height={116}
+            className="talent-card__avatar"
+          />
+          {profile.verified ? (
+            <span className="talent-card__verified" title={dictionary.accessibility.verifiedProfile}>
+              <CheckIcon />
+            </span>
+          ) : null}
         </div>
         <div>
           <span className="talent-card__status"><span /> {dictionary.common.realProfile}</span>
@@ -33,11 +59,11 @@ export function TalentCard({ profile, dictionary, compact = false }: { profile: 
             <strong>{featuredProject.name}</strong>
             <p>{featuredProject.tagline}</p>
           </div>
-          {featuredProject.liveUrl ? <span className="live-pill"><span /> LIVE</span> : null}
+          {featuredProject.liveUrl ? <span className="live-pill"><span /> {dictionary.common.live}</span> : null}
         </div>
       ) : null}
 
-      <Link href={`/talent/${profile.slug}`} className="talent-card__link">
+      <Link href={localizedPath(locale, `/talent/${profile.slug}`)} className="talent-card__link">
         {dictionary.common.viewProfile}
         <ArrowRightIcon />
       </Link>

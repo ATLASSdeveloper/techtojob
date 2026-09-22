@@ -2,15 +2,21 @@ import Image from "next/image";
 import Link from "next/link";
 import type { TalentProfile } from "@/domain/talent/types";
 import type { Dictionary } from "@/i18n/getDictionary";
+import type { Locale } from "@/i18n/config";
+import { localizedPath } from "@/i18n/routing";
 import { ArrowUpRightIcon, CheckIcon, GithubIcon } from "@/components/Icons";
 
-export function HeroVisual({ profile, dictionary }: { profile: TalentProfile; dictionary: Dictionary }) {
+function interpolate(template: string, values: Record<string, string>) {
+  return Object.entries(values).reduce((result, [key, value]) => result.replace(`{${key}}`, value), template);
+}
+
+export function HeroVisual({ profile, dictionary, locale }: { profile: TalentProfile; dictionary: Dictionary; locale: Locale }) {
   const project = profile.projects.find((item) => item.featured) ?? profile.projects[0];
   const githubLink = profile.links.find((link) => link.kind === "github");
   const githubUrl = project.repositoryUrl ?? githubLink?.href;
 
   return (
-    <div className="hero-visual" aria-label={`Perfil destacado de ${profile.name}`}>
+    <div className="hero-visual" aria-label={interpolate(dictionary.accessibility.featuredTalent, { name: profile.name })}>
       <div className="hero-orbit hero-orbit--one" aria-hidden="true" />
       <div className="hero-orbit hero-orbit--two" aria-hidden="true" />
       <div className="hero-orbit-accent hero-orbit-accent--one" aria-hidden="true" />
@@ -23,12 +29,12 @@ export function HeroVisual({ profile, dictionary }: { profile: TalentProfile; di
               src={profile.avatar}
               width={160}
               height={160}
-              alt={`Foto de ${profile.name}`}
+              alt={interpolate(dictionary.accessibility.talentPhoto, { name: profile.name })}
               className="hero-avatar"
               priority
             />
             {profile.verified ? (
-              <span className="verified-badge" aria-label="Perfil verificado">
+              <span className="verified-badge" aria-label={dictionary.accessibility.verifiedProfile}>
                 <CheckIcon />
               </span>
             ) : null}
@@ -46,18 +52,18 @@ export function HeroVisual({ profile, dictionary }: { profile: TalentProfile; di
         <div className="hero-project-mini">
           <div className="hero-project-mini__heading">
             <span className="mini-label">{dictionary.common.featuredProject}</span>
-            {project.liveUrl ? <span className="live-pill"><span /> LIVE</span> : null}
+            {project.liveUrl ? <span className="live-pill"><span /> {dictionary.common.live}</span> : null}
           </div>
           <strong>{project.name}</strong>
           <p>{project.tagline}</p>
         </div>
 
-        <div className="hero-tags" aria-label="Tecnologías del proyecto">
+        <div className="hero-tags" aria-label={dictionary.accessibility.projectTechnologies}>
           {project.technologies.slice(0, 4).map((technology) => <span key={technology}>{technology}</span>)}
         </div>
 
         <div className="hero-profile-card__actions">
-          <Link className="hero-profile-card__action hero-profile-card__action--primary" href={`/talent/${profile.slug}`}>
+          <Link className="hero-profile-card__action hero-profile-card__action--primary" href={localizedPath(locale, `/talent/${profile.slug}`)}>
             {dictionary.common.viewProfile} <ArrowUpRightIcon />
           </Link>
           {project.liveUrl ? (

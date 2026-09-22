@@ -31,3 +31,20 @@ export type TalentProfile = {
   links: TalentLink[];
   projects: TalentProject[];
 };
+
+export type TalentProjectBase = Omit<TalentProject, "name" | "tagline" | "description">;
+
+export type TalentProfileBase = Omit<TalentProfile, "role" | "bio" | "specialties" | "projects"> & {
+  projects: TalentProjectBase[];
+};
+
+export type TalentProjectTranslation = Pick<TalentProject, "name" | "tagline" | "description">;
+
+export type TalentProfileTranslation = {
+  role: string;
+  bio: string;
+  specialties: string[];
+  projects: Record<string, TalentProjectTranslation>;
+};
+
+export type TalentTranslations = Record<string, TalentProfileTranslation>;

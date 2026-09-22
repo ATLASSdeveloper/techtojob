@@ -11,7 +11,7 @@ export function ProjectCard({ project, dictionary }: { project: TalentProject; d
           <h3>{project.name}</h3>
           <p className="project-card__tagline">{project.tagline}</p>
         </div>
-        {project.liveUrl ? <span className="live-pill"><span /> LIVE</span> : null}
+        {project.liveUrl ? <span className="live-pill"><span /> {dictionary.common.live}</span> : null}
       </div>
       <p>{project.description}</p>
       <div className="chip-list">
