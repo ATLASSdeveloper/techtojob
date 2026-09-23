@@ -1,0 +1,88 @@
+/* talent: descendant states and illustration details. Layout utilities live in TSX. */
+.talent-card__link svg {
+  @apply w-[18px] h-[18px];
+}
+.directory-hero h1 {
+  @apply text-[clamp(2.8rem,6vw,5.7rem)] leading-[.98] tracking-[-.055em] [margin:14px_0];
+}
+.profile-intro h1 {
+  @apply text-[clamp(2.8rem,6vw,5.7rem)] leading-[.98] tracking-[-.055em] [margin:14px_0];
+}
+.directory-hero p {
+  @apply max-w-[700px] text-muted text-[1.05rem];
+}
+.talent-card__verified svg {
+  @apply w-[12px];
+}
+.talent-card__status span {
+  @apply w-[6px] h-[6px];
+  background: var(--mint);
+  border-radius: 50%;
+}
+.talent-card h3 {
+  @apply [margin:5px_0_0] text-[1.35rem];
+}
+.talent-card__top p {
+  @apply block m-0 text-[#76807f];
+}
+.talent-card__top small {
+  @apply block m-0 text-[#76807f];
+}
+.talent-card__skills span {
+  @apply text-[.69rem] font-bold;
+  background: #f2f6f5;
+  @apply [padding:6px_8px];
+  border-radius: 8px;
+}
+.talent-card__project strong {
+  @apply block m-0;
+}
+.talent-card__project p {
+  @apply block m-0;
+}
+.talent-card__project p {
+  @apply text-[.74rem] text-[#7c8685];
+}
+.coming-card > span {
+  @apply text-[3rem] text-[#7cacaa];
+}
+.coming-card h3 {
+  @apply text-[1.5rem] [margin:10px_0];
+}
+.coming-card p {
+  @apply text-muted;
+}
+.profile-verified svg {
+  @apply w-[15px];
+}
+.profile-intro h2 {
+  @apply m-0 text-[1.35rem] text-[#5a6665];
+}
+.profile-links .button svg {
+  @apply w-[18px];
+}
+.profile-section-title h2 {
+  @apply text-[2.5rem] tracking-[-.04em] [margin:10px_0_26px];
+}
+.project-card h3 {
+  @apply text-[1.35rem] [margin:4px_0_0];
+}
+.project-card > p {
+  @apply text-muted text-[.9rem];
+}
+.project-card .chip-list {
+  @apply [margin:16px_0];
+}
+.profile-side-card h3 {
+  @apply [margin:0_0_14px];
+}
+@media (max-width: 680px) {
+  .profile-intro h1 {
+    @apply text-[3.2rem];
+  }
+}
+@media (max-width: 680px) {
+  .profile-links .button {
+    @apply w-full;
+  }
+}
