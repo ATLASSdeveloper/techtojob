@@ -6,6 +6,11 @@ export const talentTranslationsEn = {
     bio: "Full-Stack Developer focused on web applications, APIs, software architecture, and scalable systems. He has worked with educational platforms, payment integrations, Linux infrastructure, and system modernization.",
     specialties: ["Full-Stack", "Backend", "Web Development"],
     projects: {
+      "techtojob-landing": {
+        name: "TechToJob",
+        tagline: "Community landing page",
+        description: "The TechToJob community site, where tech talent shows their work through projects, challenges, and collaboration.",
+      },
       "athena-lms": {
         name: "ATHENA",
         tagline: "Learning Management System",

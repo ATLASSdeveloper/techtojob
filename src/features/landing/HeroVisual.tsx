@@ -3,8 +3,9 @@ import Link from "next/link";
 import type { TalentProfile } from "@/domain/talent/types";
 import type { Dictionary } from "@/i18n/getDictionary";
 import type { Locale } from "@/i18n/config";
+import type { getLatestTournamentWinner } from "@/data/tournaments";
 import { localizedPath } from "@/i18n/routing";
-import { ArrowUpRightIcon, CheckIcon, GithubIcon } from "@/components/Icons";
+import { ArrowUpRightIcon, CheckIcon, GithubIcon, TrophyIcon } from "@/components/Icons";
 
 function interpolate(template: string, values: Record<string, string>) {
   return Object.entries(values).reduce(
@@ -15,23 +16,26 @@ function interpolate(template: string, values: Record<string, string>) {
 
 export function HeroVisual({
   profile,
+  winner,
   dictionary,
   locale,
 }: {
   profile: TalentProfile;
+  winner: ReturnType<typeof getLatestTournamentWinner>;
   dictionary: Dictionary;
   locale: Locale;
 }) {
   const project =
     profile.projects.find((item) => item.featured) ?? profile.projects[0];
+  const winningProject = winner?.project;
   const githubLink = profile.links.find((link) => link.kind === "github");
-  const githubUrl = project.repositoryUrl ?? githubLink?.href;
+  const githubUrl = githubLink?.href ?? project.repositoryUrl;
 
   return (
     <div
       className="hero-visual relative min-h-[550px] flex items-center justify-center isolate tablet:min-h-[520px] tablet:w-full tablet:max-w-[680px] tablet:mx-auto mobile:min-h-0 mobile:[transform:none] mobile:w-full mobile:[margin:2px_0_0] mobile:[padding:34px_0]"
       role="group"
-      aria-label={interpolate(dictionary.accessibility.featuredTalent, {
+      aria-label={interpolate(winner ? (winner.confirmed ? dictionary.accessibility.tournamentWinner : dictionary.accessibility.tournamentWinnerExample) : dictionary.accessibility.featuredTalent, {
         name: profile.name,
       })}
     >
@@ -53,6 +57,18 @@ export function HeroVisual({
       />
 
       <article className="hero-profile-card relative w-[min(100%,460px)] p-[28px] [background:rgba(255,255,255,.96)] [border-width:1px] [border-style:solid] border-[rgba(198,214,212,.9)] rounded-[30px] [box-shadow:0_34px_90px_rgba(42,55,54,.16),0_2px_8px_rgba(42,55,54,.05)] z-[1] [backdrop-filter:blur(12px)] max-w-full mobile:p-[22px] mobile:rounded-[24px] mobile:w-full mobile:[backdrop-filter:none] compact:p-[18px]">
+        {winner ? (
+          <div className="mb-[18px] flex flex-wrap items-center justify-between gap-[6px_12px] text-[.66rem] font-extrabold tracking-[.06em] text-[#426d6a]">
+            <span className="inline-flex items-center gap-[7px] uppercase">
+              <TrophyIcon className="h-[18px] w-[18px]" /> {dictionary.hero.winnerTitle}
+            </span>
+            {!winner.confirmed ? (
+              <span className="rounded-[999px] bg-[#edf4f3] px-[9px] py-[4px] text-[.61rem] tracking-normal text-[#526967]">
+                {dictionary.hero.winnerExample}
+              </span>
+            ) : null}
+          </div>
+        ) : null}
         <div className="hero-profile-card__top flex items-center gap-[18px] mobile:gap-[14px] mobile:items-center compact:items-start">
           <div className="hero-avatar-wrap relative flex-[0_0_88px] mobile:basis-[72px] compact:basis-[64px]">
             <Image
@@ -90,16 +106,16 @@ export function HeroVisual({
         <div className="hero-project-mini block">
           <div className="hero-project-mini__heading flex items-center justify-between gap-[16px] mb-[5px]">
             <span className="mini-label text-[.64rem] tracking-[.11em] uppercase text-[#66706f] font-extrabold block">
-              {dictionary.common.featuredProject}
+              {winningProject ? dictionary.hero.winningProject : dictionary.common.featuredProject}
             </span>
-            {project.liveUrl ? (
+            {(winningProject ?? project).liveUrl ? (
               <span className="live-pill inline-flex! items-center gap-[6px] h-[27px] [padding:0_10px] rounded-[999px] [background:#edf7f6] text-[#426d6a] text-[.64rem]! font-extrabold! whitespace-nowrap">
                 <span /> {dictionary.common.live}
               </span>
             ) : null}
           </div>
-          <strong>{project.name}</strong>
-          <p>{project.tagline}</p>
+          <strong>{(winningProject ?? project).name}</strong>
+          <p>{(winningProject ?? project).tagline}</p>
         </div>
 
         <div
@@ -107,10 +123,20 @@ export function HeroVisual({
           role="group"
           aria-label={dictionary.accessibility.projectTechnologies}
         >
-          {project.technologies.slice(0, 4).map((technology) => (
+          {(winningProject ?? project).technologies.slice(0, 4).map((technology) => (
             <span key={technology}>{technology}</span>
           ))}
         </div>
+
+        {winningProject && winningProject.id !== project.id ? (
+          <div className="mt-[18px] border-t border-[#edf0ef] pt-[15px]">
+            <span className="block text-[.64rem] font-extrabold uppercase tracking-[.11em] text-[#66706f]">
+              {dictionary.common.featuredProject}
+            </span>
+            <strong className="mt-[4px] block text-[.9rem] leading-[1.3]">{project.name}</strong>
+            <p className="mt-[2px]!">{project.tagline}</p>
+          </div>
+        ) : null}
 
         <div className="hero-profile-card__actions flex items-center gap-[5px] mt-[19px] pt-[15px] [border-top:1px_solid_#edf0ef] flex-wrap mobile:gap-[6px] mobile:grid mobile:grid-cols-[1fr_1fr] compact:grid-cols-[1fr]">
           <Link
@@ -119,14 +145,24 @@ export function HeroVisual({
           >
             {dictionary.common.viewProfile} <ArrowUpRightIcon />
           </Link>
-          {project.liveUrl ? (
+          {winningProject?.liveUrl ? (
+            <a
+              className="hero-profile-card__action inline-flex items-center gap-[5px] min-h-[36px] [padding:0_9px] rounded-[10px] text-[.72rem] font-extrabold text-[#46504f] [transition:background_.18s_ease,color_.18s_ease,transform_.18s_ease] mobile:px-[8px] mobile:text-[.68rem] mobile:justify-center mobile:w-full"
+              href={winningProject.liveUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {dictionary.hero.viewWinningProject} <ArrowUpRightIcon />
+            </a>
+          ) : null}
+          {project.liveUrl && project.id !== winningProject?.id ? (
             <a
               className="hero-profile-card__action inline-flex items-center gap-[5px] min-h-[36px] [padding:0_9px] rounded-[10px] text-[.72rem] font-extrabold text-[#46504f] [transition:background_.18s_ease,color_.18s_ease,transform_.18s_ease] mobile:px-[8px] mobile:text-[.68rem] mobile:justify-center mobile:w-full"
               href={project.liveUrl}
               target="_blank"
               rel="noreferrer"
             >
-              {dictionary.common.project} <ArrowUpRightIcon />
+              {winningProject ? dictionary.hero.viewFeaturedProject : dictionary.common.project} <ArrowUpRightIcon />
             </a>
           ) : null}
           {githubUrl ? (

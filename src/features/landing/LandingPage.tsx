@@ -3,6 +3,7 @@ import type { Dictionary } from "@/i18n/getDictionary";
 import type { Locale } from "@/i18n/config";
 import { localizedPath } from "@/i18n/routing";
 import type { TalentProfile } from "@/domain/talent/types";
+import type { getLatestTournamentWinner } from "@/data/tournaments";
 import { ButtonLink } from "@/components/ButtonLink";
 import { SectionHeading } from "@/components/SectionHeading";
 import { TechieCharacter } from "@/components/TechieCharacter";
@@ -21,10 +22,12 @@ import { HeroVisual } from "./HeroVisual";
 export function LandingPage({
   dictionary,
   featuredTalent,
+  latestWinner,
   locale,
 }: {
   dictionary: Dictionary;
   featuredTalent: TalentProfile;
+  latestWinner: ReturnType<typeof getLatestTournamentWinner>;
   locale: Locale;
 }) {
   const featuredProject =
@@ -67,7 +70,8 @@ export function LandingPage({
             </div>
           </div>
           <HeroVisual
-            profile={featuredTalent}
+            profile={latestWinner?.profile ?? featuredTalent}
+            winner={latestWinner}
             dictionary={dictionary}
             locale={locale}
           />

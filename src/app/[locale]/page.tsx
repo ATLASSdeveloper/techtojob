@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { LandingPage } from "@/features/landing/LandingPage";
 import { getFeaturedTalent } from "@/data/talents";
+import { getLatestTournamentWinner } from "@/data/tournaments";
 import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/getDictionary";
 import { getLanguageAlternates, getOpenGraphLocale } from "@/i18n/seo";
@@ -42,6 +43,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const locale: Locale = localeParam;
   const dictionary = await getDictionary(locale);
   const featuredTalent = getFeaturedTalent(locale);
+  const latestWinner = getLatestTournamentWinner(locale);
 
-  return <LandingPage dictionary={dictionary} featuredTalent={featuredTalent} locale={locale} />;
+  return <LandingPage dictionary={dictionary} featuredTalent={featuredTalent} latestWinner={latestWinner} locale={locale} />;
 }

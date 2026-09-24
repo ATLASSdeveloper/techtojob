@@ -35,6 +35,11 @@ export const talentProfilesBase: TalentProfileBase[] = [
     ],
     projects: [
       {
+        id: "techtojob-landing",
+        technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+        liveUrl: "https://techtojob-rho.vercel.app/",
+      },
+      {
         id: "athena-lms",
         technologies: ["Next.js", "TypeScript", "FastAPI", "PostgreSQL", "Docker"],
         liveUrl: "https://lms.gaiaecsa.com/",

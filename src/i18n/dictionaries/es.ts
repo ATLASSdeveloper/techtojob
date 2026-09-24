@@ -40,6 +40,8 @@ export const es = {
     openMenu: "Abrir menú",
     closeMenu: "Cerrar menú",
     featuredTalent: "Perfil destacado de {name}",
+    tournamentWinner: "Ganador del último torneo: {name}",
+    tournamentWinnerExample: "Ejemplo de ganador del último torneo, resultado no oficial: {name}",
     talentPhoto: "Foto de {name}",
     verifiedProfile: "Perfil verificado",
     projectTechnologies: "Tecnologías del proyecto"
@@ -55,7 +57,12 @@ export const es = {
     description: "TechToJob es una comunidad tecnológica donde el talento se demuestra construyendo. Proyectos, retos y colaboración se convierten en evidencia real de lo que sabes hacer.",
     primaryAction: "Unirme a la comunidad",
     secondaryAction: "Busco talento",
-    specialties: ["Frontend", "Backend", "Data", "Ciberseguridad", "Full-Stack"]
+    specialties: ["Frontend", "Backend", "Data", "Ciberseguridad", "Full-Stack"],
+    winnerTitle: "Ganador · último torneo",
+    winnerExample: "Ejemplo · resultado no oficial",
+    winningProject: "Proyecto ganador",
+    viewWinningProject: "Ver proyecto ganador",
+    viewFeaturedProject: "Ver proyecto destacado"
   },
   problem: {
     eyebrow: "El problema",
