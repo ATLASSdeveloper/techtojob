@@ -5,7 +5,7 @@ import type { Dictionary } from "@/i18n/getDictionary";
 import type { Locale } from "@/i18n/config";
 import type { getLatestTournamentWinner } from "@/data/tournaments";
 import { localizedPath } from "@/i18n/routing";
-import { ArrowUpRightIcon, CheckIcon, GithubIcon, TrophyIcon } from "@/components/Icons";
+import { ArrowUpRightIcon, CheckIcon, TrophyIcon } from "@/components/Icons";
 
 function interpolate(template: string, values: Record<string, string>) {
   return Object.entries(values).reduce(
@@ -28,8 +28,7 @@ export function HeroVisual({
   const project =
     profile.projects.find((item) => item.featured) ?? profile.projects[0];
   const winningProject = winner?.project;
-  const githubLink = profile.links.find((link) => link.kind === "github");
-  const githubUrl = githubLink?.href ?? project.repositoryUrl;
+  const displayedProject = winningProject ?? project;
 
   return (
     <div
@@ -98,6 +97,12 @@ export function HeroVisual({
             </span>
             <h2>{profile.name}</h2>
             <p>{profile.role}</p>
+            <Link
+              className="mt-[7px] inline-flex items-center gap-[5px] text-[.72rem] font-extrabold text-[#426d6a] hover:underline"
+              href={localizedPath(locale, `/talent/${profile.slug}`)}
+            >
+              {dictionary.common.viewProfile} <ArrowUpRightIcon className="h-[15px] w-[15px]" />
+            </Link>
           </div>
         </div>
 
@@ -108,24 +113,27 @@ export function HeroVisual({
             <span className="mini-label text-[.64rem] tracking-[.11em] uppercase text-[#66706f] font-extrabold block">
               {winningProject ? dictionary.hero.winningProject : dictionary.common.featuredProject}
             </span>
-            {(winningProject ?? project).liveUrl ? (
+            {displayedProject.liveUrl ? (
               <span className="live-pill inline-flex! items-center gap-[6px] h-[27px] [padding:0_10px] rounded-[999px] [background:#edf7f6] text-[#426d6a] text-[.64rem]! font-extrabold! whitespace-nowrap">
                 <span /> {dictionary.common.live}
               </span>
             ) : null}
           </div>
-          <strong>{(winningProject ?? project).name}</strong>
-          <p>{(winningProject ?? project).tagline}</p>
-        </div>
-
-        <div
-          className="hero-tags flex gap-[7px] flex-wrap mt-[17px]"
-          role="group"
-          aria-label={dictionary.accessibility.projectTechnologies}
-        >
-          {(winningProject ?? project).technologies.slice(0, 4).map((technology) => (
-            <span key={technology}>{technology}</span>
-          ))}
+          {displayedProject.liveUrl ? (
+            <a
+              className="group inline-flex max-w-full items-center gap-[8px] text-brand-dark hover:text-[#426d6a]"
+              href={displayedProject.liveUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`${winningProject ? dictionary.hero.viewWinningProject : dictionary.hero.viewFeaturedProject}: ${displayedProject.name}`}
+            >
+              <strong>{displayedProject.name}</strong>
+              <ArrowUpRightIcon className="h-[17px] w-[17px] shrink-0 transition-transform group-hover:translate-x-[2px] group-hover:-translate-y-[2px] motion-reduce:transition-none" />
+            </a>
+          ) : (
+            <strong>{displayedProject.name}</strong>
+          )}
+          <p>{displayedProject.tagline}</p>
         </div>
 
         {winningProject && winningProject.id !== project.id ? (
@@ -133,49 +141,23 @@ export function HeroVisual({
             <span className="block text-[.64rem] font-extrabold uppercase tracking-[.11em] text-[#66706f]">
               {dictionary.common.featuredProject}
             </span>
-            <strong className="mt-[4px] block text-[.9rem] leading-[1.3]">{project.name}</strong>
+            {project.liveUrl ? (
+              <a
+                className="group mt-[4px] inline-flex max-w-full items-center gap-[7px] text-brand-dark hover:text-[#426d6a]"
+                href={project.liveUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`${dictionary.hero.viewFeaturedProject}: ${project.name}`}
+              >
+                <strong className="text-[.9rem] leading-[1.3]">{project.name}</strong>
+                <ArrowUpRightIcon className="h-[15px] w-[15px] shrink-0 transition-transform group-hover:translate-x-[2px] group-hover:-translate-y-[2px] motion-reduce:transition-none" />
+              </a>
+            ) : (
+              <strong className="mt-[4px] block text-[.9rem] leading-[1.3]">{project.name}</strong>
+            )}
             <p className="mt-[2px]!">{project.tagline}</p>
           </div>
         ) : null}
-
-        <div className="hero-profile-card__actions flex items-center gap-[5px] mt-[19px] pt-[15px] [border-top:1px_solid_#edf0ef] flex-wrap mobile:gap-[6px] mobile:grid mobile:grid-cols-[1fr_1fr] compact:grid-cols-[1fr]">
-          <Link
-            className="hero-profile-card__action hero-profile-card__action--primary inline-flex items-center gap-[5px] min-h-[36px] [padding:0_9px] rounded-[10px] text-[.72rem] font-extrabold text-brand-dark [transition:background_.18s_ease,color_.18s_ease,transform_.18s_ease] [background:#edf4f3] px-[11px] mobile:px-[8px] mobile:text-[.68rem] mobile:justify-center mobile:w-full mobile:col-[1/-1] compact:col-auto"
-            href={localizedPath(locale, `/talent/${profile.slug}`)}
-          >
-            {dictionary.common.viewProfile} <ArrowUpRightIcon />
-          </Link>
-          {winningProject?.liveUrl ? (
-            <a
-              className="hero-profile-card__action inline-flex items-center gap-[5px] min-h-[36px] [padding:0_9px] rounded-[10px] text-[.72rem] font-extrabold text-[#46504f] [transition:background_.18s_ease,color_.18s_ease,transform_.18s_ease] mobile:px-[8px] mobile:text-[.68rem] mobile:justify-center mobile:w-full"
-              href={winningProject.liveUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {dictionary.hero.viewWinningProject} <ArrowUpRightIcon />
-            </a>
-          ) : null}
-          {project.liveUrl && project.id !== winningProject?.id ? (
-            <a
-              className="hero-profile-card__action inline-flex items-center gap-[5px] min-h-[36px] [padding:0_9px] rounded-[10px] text-[.72rem] font-extrabold text-[#46504f] [transition:background_.18s_ease,color_.18s_ease,transform_.18s_ease] mobile:px-[8px] mobile:text-[.68rem] mobile:justify-center mobile:w-full"
-              href={project.liveUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {winningProject ? dictionary.hero.viewFeaturedProject : dictionary.common.project} <ArrowUpRightIcon />
-            </a>
-          ) : null}
-          {githubUrl ? (
-            <a
-              className="hero-profile-card__action inline-flex items-center gap-[5px] min-h-[36px] [padding:0_9px] rounded-[10px] text-[.72rem] font-extrabold text-[#46504f] [transition:background_.18s_ease,color_.18s_ease,transform_.18s_ease] mobile:px-[8px] mobile:text-[.68rem] mobile:justify-center mobile:w-full"
-              href={githubUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <GithubIcon /> GitHub <ArrowUpRightIcon />
-            </a>
-          ) : null}
-        </div>
       </article>
     </div>
   );

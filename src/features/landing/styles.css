@@ -5,9 +5,6 @@
 .final-cta p {
   @apply text-[1.05rem] text-muted max-w-[680px];
 }
-.hero-profile-card__actions svg {
-  @apply w-[18px] h-[18px];
-}
 .hero-copy h1 {
   @apply text-[clamp(3.4rem,6.2vw,6.5rem)] leading-[.95] tracking-[-.065em] [margin:16px_0_24px] max-w-[720px];
 }
@@ -15,13 +12,6 @@
   @apply text-[#547b79];
 }
 .hero-specialties span {
-  @apply text-[.77rem] font-bold;
-  border: 1px solid #d9e1e0;
-  @apply [padding:7px_10px];
-  border-radius: 999px;
-  background: #fff;
-}
-.hero-tags span {
   @apply text-[.77rem] font-bold;
   border: 1px solid #d9e1e0;
   @apply [padding:7px_10px];
@@ -61,30 +51,11 @@
 .hero-profile-card p {
   @apply m-0 text-[#66706f] text-[.88rem];
 }
-.hero-project-mini > strong {
+.hero-project-mini strong {
   @apply block text-[1.12rem] leading-[1.25] tracking-[-.01em];
 }
 .hero-project-mini > p {
   @apply mt-[2px];
-}
-.hero-tags span {
-  background: #fbfcfc;
-  border-color: #d9e1e0;
-  @apply [padding:6px_9px] text-[.72rem];
-}
-.hero-profile-card__action svg {
-  @apply w-[15px] h-[15px] flex-[0_0_auto];
-}
-.hero-profile-card__action svg:first-child:not(:last-child) {
-  @apply w-[14px] h-[14px];
-}
-.hero-profile-card__action:hover {
-  background: #f2f6f5;
-  @apply text-brand-dark;
-  transform: translateY(-1px);
-}
-.hero-profile-card__action--primary:hover {
-  background: #e3efee;
 }
 .problem-card strong {
   @apply block text-[3.2rem] leading-[1] text-brand-mint tracking-[-.05em];
