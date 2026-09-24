@@ -59,7 +59,7 @@ export const en = {
     secondaryAction: "I'm hiring",
     specialties: ["Frontend", "Backend", "Data", "Cybersecurity", "Full-Stack"],
     winnerTitle: "Winner · latest tournament",
-    winnerExample: "Example · unofficial result",
+    winnerExample: "Unofficial result",
     winningProject: "Winning project",
     viewWinningProject: "View winning project",
     viewFeaturedProject: "View featured project"

@@ -59,7 +59,7 @@ export const es = {
     secondaryAction: "Busco talento",
     specialties: ["Frontend", "Backend", "Data", "Ciberseguridad", "Full-Stack"],
     winnerTitle: "Ganador · último torneo",
-    winnerExample: "Ejemplo · resultado no oficial",
+    winnerExample: "Resultado no oficial",
     winningProject: "Proyecto ganador",
     viewWinningProject: "Ver proyecto ganador",
     viewFeaturedProject: "Ver proyecto destacado"
